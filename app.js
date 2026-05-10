@@ -3,6 +3,57 @@ const state = {
   currentMarket: "cn"
 };
 
+const LOGO_DOMAINS = {
+  "300750": "catl.com",
+  "600519": "moutaichina.com",
+  "002594": "byd.com",
+  "300308": "innolight.com",
+  "601138": "fii-foxconn.com",
+  "300059": "eastmoney.com",
+  "603259": "wuxiapptec.com",
+  "601127": "seres.cn",
+  "688981": "smics.com",
+  "601899": "zijinmining.com",
+  "000858": "wuliangye.com.cn",
+  "601318": "pingan.cn",
+  "600036": "cmbchina.com",
+  "000333": "midea.com",
+  "600276": "hengrui.com",
+  "000651": "gree.com",
+  "600887": "yili.com",
+  "601012": "longi.com",
+  "600030": "citics.com",
+  "600900": "ctg.com.cn",
+  NVDA: "nvidia.com",
+  TSLA: "tesla.com",
+  AAPL: "apple.com",
+  MSFT: "microsoft.com",
+  AMD: "amd.com",
+  META: "meta.com",
+  GOOGL: "abc.xyz",
+  GOOG: "abc.xyz",
+  PLTR: "palantir.com",
+  AMZN: "amazon.com",
+  COIN: "coinbase.com",
+  RDDT: "reddit.com",
+  NFLX: "netflix.com",
+  GME: "gamestop.com",
+  AMC: "amctheatres.com",
+  HOOD: "robinhood.com",
+  MSTR: "strategy.com",
+  BABA: "alibabagroup.com",
+  AVGO: "broadcom.com",
+  ORCL: "oracle.com",
+  CRM: "salesforce.com",
+  INTC: "intel.com",
+  QCOM: "qualcomm.com",
+  SHOP: "shopify.com",
+  UBER: "uber.com",
+  DIS: "disney.com",
+  PYPL: "paypal.com",
+  SNOW: "snowflake.com"
+};
+
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 
@@ -33,6 +84,36 @@ function changeClass(value) {
   return "";
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function logoInitial(item) {
+  const value = item.symbol || item.name || "?";
+  return escapeHtml(String(value).trim().slice(0, 2).toUpperCase());
+}
+
+function logoMarkup(item) {
+  const symbol = String(item.symbol || "").toUpperCase();
+  const domain = item.logoDomain || LOGO_DOMAINS[symbol];
+  const logoUrl = item.logoUrl || (domain ? `https://geticon.dev/?url=${encodeURIComponent(domain)}` : "");
+  const fallback = `<span class="logo-fallback-text">${logoInitial(item)}</span>`;
+  if (!logoUrl) {
+    return `<div class="brand-logo logo-fallback">${fallback}</div>`;
+  }
+  return `
+    <div class="brand-logo" data-fallback="${logoInitial(item)}">
+      <img src="${escapeHtml(logoUrl)}" alt="${escapeHtml(item.name || item.symbol || "公司")} logo" loading="lazy" />
+      ${fallback}
+    </div>
+  `;
+}
+
 function renderMarket(marketKey) {
   if (!state.data) return;
 
@@ -40,8 +121,9 @@ function renderMarket(marketKey) {
   const items = Array.isArray(market.items) ? market.items.slice(0, 10) : [];
   state.currentMarket = marketKey;
 
-  document.documentElement.style.setProperty("--accent", market.accent || "#ff4d5e");
-  const soft = marketKey === "us" ? "rgba(76, 201, 240, 0.2)" : "rgba(255, 77, 94, 0.2)";
+  const accent = market.accent || (marketKey === "us" ? "#8fb9ff" : "#df7a63");
+  document.documentElement.style.setProperty("--accent", accent);
+  const soft = marketKey === "us" ? "rgba(143, 185, 255, 0.16)" : "rgba(223, 122, 99, 0.16)";
   document.documentElement.style.setProperty("--accent-soft", soft);
 
   $$(".market-tab").forEach((tab) => {
@@ -62,17 +144,20 @@ function renderMarket(marketKey) {
     .map((item) => {
       const change = item.change ? `<span class="change ${changeClass(item.change)}">${item.change}</span>` : "";
       const aiComment = item.aiComment
-        ? `<p class="ai-comment"><span>DeepSeek 评价</span>${item.aiComment}</p>`
+        ? `<p class="ai-comment"><span>DeepSeek 评价</span>${escapeHtml(item.aiComment)}</p>`
         : "";
       return `
         <article class="row-card">
           <div class="rank">${item.rank}</div>
-          <div class="stock-name">
-            <strong>${item.name || item.symbol}</strong>
-            <span>${item.symbol || ""}</span>
+          <div class="stock-identity">
+            ${logoMarkup(item)}
+            <div class="stock-name">
+              <strong>${escapeHtml(item.name || item.symbol)}</strong>
+              <span>${escapeHtml(item.symbol || "")}</span>
+            </div>
           </div>
           <div class="text-stack">
-            <p class="summary">${item.summary || ""}</p>
+            <p class="summary">${escapeHtml(item.summary || "")}</p>
             ${aiComment}
           </div>
           <div class="metric-box">
@@ -84,6 +169,13 @@ function renderMarket(marketKey) {
       `;
     })
     .join("");
+
+  $$(".brand-logo img").forEach((image) => {
+    image.addEventListener("error", () => {
+      image.closest(".brand-logo")?.classList.add("logo-fallback");
+      image.remove();
+    });
+  });
 }
 
 async function boot() {
