@@ -7,6 +7,8 @@
 
 页面会部署到 GitHub Pages，并在每周更新后截图推送到 Telegram。
 
+页面地址：<https://zzcsama.github.io/market-weekly-sentiment-top10/>
+
 ## 数据规则
 
 A 股榜单优先读取东方财富人气榜公开数据，并用排名、涨跌幅等公开字段生成情绪分和中文摘要。
@@ -41,22 +43,3 @@ python3 -m http.server 4177
 ```
 
 然后打开 `http://127.0.0.1:4177/` 查看页面。
-
-## 首次同步到 GitHub
-
-先在 GitHub 创建空仓库，建议仓库名：
-
-```text
-market-weekly-sentiment-top10
-```
-
-然后在本地项目目录执行：
-
-```bash
-git init
-git add .
-git commit -m "Initial market sentiment top 10"
-git branch -M main
-git remote add origin https://github.com/zzcsama/market-weekly-sentiment-top10.git
-git push -u origin main
-```
