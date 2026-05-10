@@ -211,11 +211,38 @@ h2 {
   font-weight: 750;
 }
 
+.text-stack,
 .summary {
   min-width: 0;
+}
+
+.text-stack {
+  display: grid;
+  gap: 8px;
+}
+
+.summary {
   margin: 0;
   color: #d7dee8;
   line-height: 1.55;
+}
+
+.ai-comment {
+  margin: 0;
+  border-left: 3px solid var(--accent);
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: #edf2f8;
+  background: rgba(255, 255, 255, 0.05);
+  line-height: 1.5;
+}
+
+.ai-comment span {
+  display: inline-block;
+  margin-right: 8px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 900;
 }
 
 .metric-box {
@@ -304,7 +331,7 @@ h2 {
     min-height: 0;
   }
 
-  .summary,
+  .text-stack,
   .metric-box {
     grid-column: 1 / -1;
   }
