@@ -14,6 +14,8 @@ SNAPSHOT_DIR = ROOT / "data" / "snapshots"
 CN_LIMIT = 10
 US_LIMIT = 10
 TZ = timezone(timedelta(hours=8))
+DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com").rstrip("/")
+DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-v4-flash")
 US_EXCLUDED_SYMBOLS = {
     "SPY",
     "QQQ",
@@ -92,6 +94,86 @@ def build_cn_summary(rank: int, change: Optional[float], metric: str) -> str:
         return f"东方财富人气榜第 {rank}，本周讨论热度较高，市场关注度集中在短期情绪变化。"
     direction = "上涨" if change > 0 else "回落" if change < 0 else "横盘"
     return f"东方财富人气榜第 {rank}，股价本周{direction} {abs(change):.2f}%，{metric}带动讨论热度升温。"
+
+
+def compact_item(item: Dict[str, Any]) -> Dict[str, Any]:
+    return {
+        "rank": item.get("rank"),
+        "symbol": item.get("symbol"),
+        "name": item.get("name"),
+        "score": item.get("score"),
+        "metric": item.get("metric"),
+        "change": item.get("change"),
+        "summary": item.get("summary"),
+    }
+
+
+def clean_ai_comment(value: Any) -> str:
+    text = str(value or "").replace("\n", " ").strip()
+    return text[:120]
+
+
+def apply_deepseek_comments(
+    markets: Dict[str, List[Dict[str, Any]]],
+    period: Dict[str, str],
+) -> Dict[str, str]:
+    api_key = os.getenv("DEEPSEEK_API_KEY")
+    if not api_key:
+        return {"cn": "未配置 DeepSeek", "us": "未配置 DeepSeek"}
+
+    prompt_payload = {
+        "period": period,
+        "markets": {
+            "cn": [compact_item(item) for item in markets["cn"]],
+            "us": [compact_item(item) for item in markets["us"]],
+        },
+    }
+    prompt = (
+        "请根据以下公开市场热度榜数据，为每只股票生成一条中文本周评价。"
+        "要求：只描述本周市场情绪、讨论焦点、波动原因或关注点；"
+        "不要写买入、卖出、持有、加仓、减仓、目标价等投资建议；"
+        "每条 26 到 46 个汉字；严格输出 JSON，格式为 "
+        '{"cn":{"代码":"评价"},"us":{"代码":"评价"}}。\n\n'
+        f"{json.dumps(prompt_payload, ensure_ascii=False)}"
+    )
+
+    try:
+        response = requests.post(
+            f"{DEEPSEEK_BASE_URL}/chat/completions",
+            timeout=45,
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": DEEPSEEK_MODEL,
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "你是谨慎的市场情绪周报编辑，只做公开信息解读，不提供投资建议。",
+                    },
+                    {"role": "user", "content": prompt},
+                ],
+                "temperature": 0.2,
+                "max_tokens": 1800,
+                "response_format": {"type": "json_object"},
+                "thinking": {"type": "disabled"},
+                "stream": False,
+            },
+        )
+        response.raise_for_status()
+        content = response.json()["choices"][0]["message"]["content"]
+        comments = json.loads(content)
+        for market_key, items in markets.items():
+            market_comments = comments.get(market_key, {})
+            for item in items:
+                comment = clean_ai_comment(market_comments.get(str(item.get("symbol"))))
+                if comment:
+                    item["aiComment"] = comment
+        return {"cn": "DeepSeek 评价已生成", "us": "DeepSeek 评价已生成"}
+    except Exception as exc:
+        print(f"DeepSeek analysis failed: {exc}")
+        return {"cn": "DeepSeek 评价失败", "us": "DeepSeek 评价失败"}
 
 
 def fetch_cn_items() -> List[Dict[str, Any]]:
@@ -181,13 +263,20 @@ def fallback_items(existing: Dict[str, Any], market_key: str) -> List[Dict[str, 
     return items[:10]
 
 
-def market_block(existing: Dict[str, Any], key: str, fetched: Optional[List[Dict[str, Any]]], status: str) -> Dict[str, Any]:
+def market_block(
+    existing: Dict[str, Any],
+    key: str,
+    fetched: Optional[List[Dict[str, Any]]],
+    status: str,
+    ai_status: str,
+) -> Dict[str, Any]:
     previous = existing.get("markets", {}).get(key, {})
     return {
         "label": previous.get("label", "一周 A 股热评" if key == "cn" else "一周 美股热评"),
         "subtitle": "本周市场情绪 Top 10",
         "source": "东方财富人气榜 / 公开市场数据" if key == "cn" else "ApeWisdom / Reddit 股票社区热度",
         "updatedLabel": status,
+        "aiStatus": ai_status,
         "accent": "#ff4d5e" if key == "cn" else "#4cc9f0",
         "items": fetched or fallback_items(existing, key),
     }
@@ -215,6 +304,8 @@ def main() -> None:
         us_items = fallback_items(existing, "us")
         statuses["us"] = "取数失败，保留上期"
 
+    ai_statuses = apply_deepseek_comments({"cn": cn_items, "us": us_items}, period)
+
     payload = {
         "generatedAt": today.isoformat(),
         "period": period,
@@ -223,8 +314,8 @@ def main() -> None:
             "description": "A 股与美股的每周讨论热度榜。仅用于观察市场情绪，不构成投资建议。",
         },
         "markets": {
-            "cn": market_block(existing, "cn", cn_items, statuses["cn"]),
-            "us": market_block(existing, "us", us_items, statuses["us"]),
+            "cn": market_block(existing, "cn", cn_items, statuses["cn"], ai_statuses["cn"]),
+            "us": market_block(existing, "us", us_items, statuses["us"], ai_statuses["us"]),
         },
         "disclaimer": "本榜单仅反映公开数据中的市场讨论热度和情绪变化，不构成任何投资建议。",
     }
