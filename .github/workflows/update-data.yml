@@ -43,6 +43,9 @@ jobs:
 
       - name: Update data
         run: npm run update:data
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          DEEPSEEK_MODEL: deepseek-v4-flash
 
       - name: Commit updated data
         run: |
