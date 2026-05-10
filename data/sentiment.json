@@ -15,7 +15,7 @@
       "subtitle": "本周市场情绪 Top 10",
       "source": "东方财富人气榜 / 公开市场数据",
       "updatedLabel": "示例数据，等待首次自动更新",
-      "accent": "#ff4d5e",
+      "accent": "#df7a63",
       "items": [
         {
           "rank": 1,
@@ -114,7 +114,7 @@
       "subtitle": "本周市场情绪 Top 10",
       "source": "ApeWisdom / Reddit 股票社区热度",
       "updatedLabel": "示例数据，等待首次自动更新",
-      "accent": "#4cc9f0",
+      "accent": "#8fb9ff",
       "items": [
         {
           "rank": 1,
