@@ -54,13 +54,16 @@ function renderMarket(marketKey) {
   $("#sourceText").textContent = market.source || "公开数据";
   $("#countStat").textContent = String(items.length);
   $("#scoreStat").textContent = items[0] ? String(items[0].score) : "--";
-  $("#updateStat").textContent = market.updatedLabel || "已更新";
+  $("#updateStat").textContent = market.aiStatus || market.updatedLabel || "已更新";
   $("#generatedAt").textContent = `生成时间 ${formatDateTime(state.data.generatedAt)}`;
   $("#disclaimer").textContent = state.data.disclaimer || "本榜单仅用于观察市场情绪，不构成投资建议。";
 
   $("#leaderboard").innerHTML = items
     .map((item) => {
       const change = item.change ? `<span class="change ${changeClass(item.change)}">${item.change}</span>` : "";
+      const aiComment = item.aiComment
+        ? `<p class="ai-comment"><span>DeepSeek 评价</span>${item.aiComment}</p>`
+        : "";
       return `
         <article class="row-card">
           <div class="rank">${item.rank}</div>
@@ -68,7 +71,10 @@ function renderMarket(marketKey) {
             <strong>${item.name || item.symbol}</strong>
             <span>${item.symbol || ""}</span>
           </div>
-          <p class="summary">${item.summary || ""}</p>
+          <div class="text-stack">
+            <p class="summary">${item.summary || ""}</p>
+            ${aiComment}
+          </div>
           <div class="metric-box">
             <span class="score">${item.score ?? "--"}</span>
             <span class="metric">${item.metric || "热度"}</span>
