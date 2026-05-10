@@ -16,6 +16,56 @@ US_LIMIT = 10
 TZ = timezone(timedelta(hours=8))
 DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com").rstrip("/")
 DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-v4-flash")
+LOGO_DOMAINS = {
+    "300750": "catl.com",
+    "600519": "moutaichina.com",
+    "002594": "byd.com",
+    "300308": "innolight.com",
+    "601138": "fii-foxconn.com",
+    "300059": "eastmoney.com",
+    "603259": "wuxiapptec.com",
+    "601127": "seres.cn",
+    "688981": "smics.com",
+    "601899": "zijinmining.com",
+    "000858": "wuliangye.com.cn",
+    "601318": "pingan.cn",
+    "600036": "cmbchina.com",
+    "000333": "midea.com",
+    "600276": "hengrui.com",
+    "000651": "gree.com",
+    "600887": "yili.com",
+    "601012": "longi.com",
+    "600030": "citics.com",
+    "600900": "ctg.com.cn",
+    "NVDA": "nvidia.com",
+    "TSLA": "tesla.com",
+    "AAPL": "apple.com",
+    "MSFT": "microsoft.com",
+    "AMD": "amd.com",
+    "META": "meta.com",
+    "GOOGL": "abc.xyz",
+    "GOOG": "abc.xyz",
+    "PLTR": "palantir.com",
+    "AMZN": "amazon.com",
+    "COIN": "coinbase.com",
+    "RDDT": "reddit.com",
+    "NFLX": "netflix.com",
+    "GME": "gamestop.com",
+    "AMC": "amctheatres.com",
+    "HOOD": "robinhood.com",
+    "MSTR": "strategy.com",
+    "BABA": "alibabagroup.com",
+    "AVGO": "broadcom.com",
+    "ORCL": "oracle.com",
+    "CRM": "salesforce.com",
+    "INTC": "intel.com",
+    "QCOM": "qualcomm.com",
+    "SHOP": "shopify.com",
+    "UBER": "uber.com",
+    "DIS": "disney.com",
+    "PYPL": "paypal.com",
+    "SNOW": "snowflake.com",
+}
 US_EXCLUDED_SYMBOLS = {
     "SPY",
     "QQQ",
@@ -113,6 +163,15 @@ def clean_ai_comment(value: Any) -> str:
     return text[:120]
 
 
+def apply_logo(item: Dict[str, Any]) -> Dict[str, Any]:
+    symbol = str(item.get("symbol") or "").upper()
+    domain = LOGO_DOMAINS.get(symbol)
+    if domain:
+        item["logoDomain"] = domain
+        item["logoUrl"] = f"https://geticon.dev/?url={domain}"
+    return item
+
+
 def apply_deepseek_comments(
     markets: Dict[str, List[Dict[str, Any]]],
     period: Dict[str, str],
@@ -196,7 +255,7 @@ def fetch_cn_items() -> List[Dict[str, Any]]:
         score = round(max(50, 110 - rank * 4) + min(abs(change or 0) * 1.2, 12))
 
         items.append(
-            {
+            apply_logo({
                 "rank": index,
                 "symbol": symbol,
                 "name": name,
@@ -204,7 +263,7 @@ def fetch_cn_items() -> List[Dict[str, Any]]:
                 "metric": metric,
                 "change": pct_text(change),
                 "summary": build_cn_summary(rank, change, "人气排名"),
-            }
+            })
         )
 
     if len(items) < CN_LIMIT:
@@ -237,7 +296,7 @@ def fetch_us_items() -> List[Dict[str, Any]]:
         metric = f"{mentions:,} mentions" if mentions else "社区热度"
 
         items.append(
-            {
+            apply_logo({
                 "rank": len(items) + 1,
                 "symbol": symbol,
                 "name": name,
@@ -245,7 +304,7 @@ def fetch_us_items() -> List[Dict[str, Any]]:
                 "metric": metric,
                 "change": f"排名{move}",
                 "summary": f"Reddit 股票社区热度第 {rank}，本期提及 {mentions:,} 次、点赞 {upvotes:,} 次，讨论排名较前期{move}。",
-            }
+            })
         )
         if len(items) >= US_LIMIT:
             break
@@ -260,7 +319,7 @@ def fallback_items(existing: Dict[str, Any], market_key: str) -> List[Dict[str, 
     items = markets.get(market_key, {}).get("items", [])
     if not items:
         raise RuntimeError(f"missing fallback data for {market_key}")
-    return items[:10]
+    return [apply_logo(item) for item in items[:10]]
 
 
 def market_block(
@@ -277,7 +336,7 @@ def market_block(
         "source": "东方财富人气榜 / 公开市场数据" if key == "cn" else "ApeWisdom / Reddit 股票社区热度",
         "updatedLabel": status,
         "aiStatus": ai_status,
-        "accent": "#ff4d5e" if key == "cn" else "#4cc9f0",
+        "accent": "#df7a63" if key == "cn" else "#8fb9ff",
         "items": fetched or fallback_items(existing, key),
     }
 
