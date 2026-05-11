@@ -25,11 +25,11 @@ function topNames(market) {
 
 function caption() {
   return [
-    `一周市场情绪 Top 10`,
+    `一周市场周报`,
     `周期：${data.period.label}`,
     ``,
-    `A 股前三：${topNames("cn")}`,
-    `美股前三：${topNames("us")}`,
+    `A 股关注：${topNames("cn")}`,
+    `美股关注：${topNames("us")}`,
     ``,
     `网页：${pageUrl}`,
     `仅反映公开讨论热度，不构成投资建议。`
@@ -53,7 +53,7 @@ async function uploadPhoto(photoPath, text) {
 
 (async () => {
   await uploadPhoto(path.join(root, "outputs", "market-sentiment-cn.png"), caption());
-  await uploadPhoto(path.join(root, "outputs", "market-sentiment-us.png"), `一周美股热评 Top 10\n${pageUrl}`);
+  await uploadPhoto(path.join(root, "outputs", "market-sentiment-us.png"), `一周美股周报\n${data.period.label}\n${pageUrl}`);
 })().catch((error) => {
   console.error(error);
   process.exit(1);
