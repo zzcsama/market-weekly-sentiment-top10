@@ -145,6 +145,30 @@ const QUOTE_VALUES = {
   COIN: "$248.10"
 };
 
+const BADGE_ONLY_SYMBOLS = new Set([
+  "SOXX",
+  "SMH",
+  "XLK",
+  "XLY",
+  "XLB",
+  "XLRE",
+  "XLC",
+  "XLI",
+  "XLP",
+  "XLV",
+  "XLF",
+  "XLU",
+  "XLE",
+  "AI",
+  "CPO",
+  "EV",
+  "SEMI",
+  "BROKER",
+  "GOLD",
+  "LIQUOR",
+  "CXO"
+]);
+
 const $ = (selector) => document.querySelector(selector);
 
 function escapeHtml(value) {
@@ -177,12 +201,16 @@ function logoUrl(symbol) {
 }
 
 function logoMarkup(symbol, name) {
-  const cleanSymbol = escapeHtml(symbol || "?");
-  const src = logoUrl(symbol);
-  if (!src) {
-    return `<span class="ticker-fallback">${cleanSymbol.slice(0, 4)}</span>`;
+  const rawSymbol = String(symbol || "?").toUpperCase();
+  const cleanSymbol = escapeHtml(rawSymbol);
+  const src = logoUrl(rawSymbol);
+  if (BADGE_ONLY_SYMBOLS.has(rawSymbol)) {
+    return `<span class="ticker-fallback badge-${cleanSymbol.length % 6}">${cleanSymbol.slice(0, 5)}</span>`;
   }
-  return `<span class="logo-chip"><img src="${escapeHtml(src)}" alt="${escapeHtml(name || symbol)} logo" loading="lazy" /><b>${cleanSymbol.slice(0, 4)}</b></span>`;
+  if (!src) {
+    return `<span class="ticker-fallback badge-${cleanSymbol.length % 6}">${cleanSymbol.slice(0, 5)}</span>`;
+  }
+  return `<span class="logo-chip"><img src="${escapeHtml(src)}" alt="${escapeHtml(name || symbol)} logo" loading="lazy" /><b>${cleanSymbol.slice(0, 5)}</b></span>`;
 }
 
 function iconSvg(type) {
@@ -224,7 +252,11 @@ function reportFor(data, marketKey) {
   }));
   const hotStocks =
     report.hotStocks ||
-    (marketHotStocks.length ? marketHotStocks : defaults.hotStocks);
+    (marketKey === "us"
+      ? defaults.hotStocks
+      : marketHotStocks.length
+        ? marketHotStocks
+        : defaults.hotStocks);
 
   return {
     ...defaults,
