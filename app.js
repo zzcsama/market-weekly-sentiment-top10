@@ -203,14 +203,15 @@ function logoUrl(symbol) {
 function logoMarkup(symbol, name) {
   const rawSymbol = String(symbol || "?").toUpperCase();
   const cleanSymbol = escapeHtml(rawSymbol);
+  const displaySymbol = escapeHtml(/^\d{6}$/.test(rawSymbol) ? rawSymbol : rawSymbol.slice(0, 5));
   const src = logoUrl(rawSymbol);
   if (BADGE_ONLY_SYMBOLS.has(rawSymbol)) {
-    return `<span class="ticker-fallback badge-${cleanSymbol.length % 6}">${cleanSymbol.slice(0, 5)}</span>`;
+    return `<span class="ticker-fallback badge-${cleanSymbol.length % 6}">${displaySymbol}</span>`;
   }
   if (!src) {
-    return `<span class="ticker-fallback badge-${cleanSymbol.length % 6}">${cleanSymbol.slice(0, 5)}</span>`;
+    return `<span class="ticker-fallback badge-${cleanSymbol.length % 6}">${displaySymbol}</span>`;
   }
-  return `<span class="logo-chip"><img src="${escapeHtml(src)}" alt="${escapeHtml(name || symbol)} logo" loading="lazy" /><b>${cleanSymbol.slice(0, 5)}</b></span>`;
+  return `<span class="logo-chip"><img src="${escapeHtml(src)}" alt="${escapeHtml(name || symbol)} logo" loading="lazy" /><b>${displaySymbol}</b></span>`;
 }
 
 function iconSvg(type) {
