@@ -46,11 +46,11 @@ function startServer() {
 
 async function captureMarket(browser, baseUrl, market) {
   const page = await browser.newPage({
-    viewport: { width: 1200, height: 1500 },
+    viewport: { width: 1080, height: 1600 },
     deviceScaleFactor: 2
   });
   await page.goto(`${baseUrl}/?market=${market}`, { waitUntil: "networkidle" });
-  await page.waitForSelector(".row-card:nth-of-type(10)");
+  await page.waitForSelector(".weekly-report");
   await page.screenshot({
     path: path.join(outputDir, `market-sentiment-${market}.png`),
     fullPage: true
