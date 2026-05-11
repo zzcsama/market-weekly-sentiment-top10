@@ -369,14 +369,14 @@ def main() -> None:
         "generatedAt": today.isoformat(),
         "period": period,
         "site": {
-            "title": "一周市场情绪 Top 10",
-            "description": "A 股与美股的每周讨论热度榜。仅用于观察市场情绪，不构成投资建议。",
+            "title": "一周市场周报",
+            "description": "A 股与美股的每周市场信息图。仅用于观察市场情绪，不构成投资建议。",
         },
         "markets": {
             "cn": market_block(existing, "cn", cn_items, statuses["cn"], ai_statuses["cn"]),
             "us": market_block(existing, "us", us_items, statuses["us"], ai_statuses["us"]),
         },
-        "disclaimer": "本榜单仅反映公开数据中的市场讨论热度和情绪变化，不构成任何投资建议。",
+        "disclaimer": "本报告仅反映公开数据中的市场讨论热度和情绪变化，不构成任何投资建议。",
     }
 
     DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
