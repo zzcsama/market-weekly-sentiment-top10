@@ -493,6 +493,25 @@ td {
 .hot-table th:first-child,
 .hot-table td:first-child {
   width: 132px;
+  padding-left: 16px;
+  text-align: left;
+}
+
+.hot-table .logo-chip,
+.hot-table .ticker-fallback {
+  min-width: 58px;
+  height: 28px;
+  transform: translateX(-8px);
+  font-size: 12.5px;
+}
+
+.hot-table .logo-chip img {
+  width: 22px;
+  height: 22px;
+}
+
+.hot-table .logo-chip b {
+  padding: 0 5px;
 }
 
 .hot-table th:nth-child(3),
