@@ -1,8 +1,8 @@
-name: Update Weekly Market Sentiment
+name: Update and Publish Weekly Market Sentiment
 
 on:
   schedule:
-    - cron: "0 1 * * 6"
+    - cron: "0 2 * * 6"
   workflow_dispatch:
 
 permissions:
@@ -17,6 +17,11 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      TELEGRAM_CHANNEL: ${{ secrets.TELEGRAM_CHANNEL }}
+      PUBLIC_PAGE_URL: https://zzcsama.github.io/market-weekly-sentiment-top10/
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,6 +46,9 @@ jobs:
       - name: Install Node dependencies
         run: npm install
 
+      - name: Install browser
+        run: npx playwright install --with-deps chromium
+
       - name: Update data
         run: npm run update:data
         env:
@@ -58,6 +66,12 @@ jobs:
           else
             echo "No data changes"
           fi
+
+      - name: Capture pages
+        run: npm run capture:all
+
+      - name: Publish Telegram
+        run: npm run publish:telegram
 
       - name: Remove install files
         run: rm -rf node_modules
