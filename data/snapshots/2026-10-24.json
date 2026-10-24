@@ -1,0 +1,223 @@
+{
+  "generatedAt": "2026-10-24T15:06:56.464654+08:00",
+  "period": {
+    "label": "2026/10/19 - 2026/10/25",
+    "start": "2026-10-19",
+    "end": "2026-10-25"
+  },
+  "site": {
+    "title": "一周市场周报",
+    "description": "A 股与美股的每周市场信息图。仅用于观察市场情绪，不构成投资建议。"
+  },
+  "markets": {
+    "cn": {
+      "label": "一周 A 股热评",
+      "subtitle": "本周市场情绪 Top 10",
+      "source": "东方财富人气榜 / 公开市场数据",
+      "updatedLabel": "取数失败，保留上期",
+      "aiStatus": "DeepSeek 评价失败",
+      "accent": "#df7a63",
+      "items": [
+        {
+          "rank": 1,
+          "symbol": "SZ002085",
+          "name": "万丰奥威",
+          "score": 99,
+          "metric": "人气榜第 1",
+          "change": "+9.99%",
+          "summary": "东方财富人气榜第 1，股价本周上涨 9.99%，人气排名带动讨论热度升温。"
+        },
+        {
+          "rank": 2,
+          "symbol": "SH688825",
+          "name": "长鑫科技",
+          "score": 99,
+          "metric": "人气榜第 2",
+          "change": "+3.28%",
+          "summary": "东方财富人气榜第 2，股价本周上涨 3.28%，人气排名带动讨论热度升温。"
+        },
+        {
+          "rank": 3,
+          "symbol": "SH600418",
+          "name": "江淮汽车",
+          "score": 99,
+          "metric": "人气榜第 3",
+          "change": "+9.98%",
+          "summary": "东方财富人气榜第 3，股价本周上涨 9.98%，人气排名带动讨论热度升温。"
+        },
+        {
+          "rank": 4,
+          "symbol": "SZ001696",
+          "name": "宗申动力",
+          "score": 99,
+          "metric": "人气榜第 4",
+          "change": "+9.98%",
+          "summary": "东方财富人气榜第 4，股价本周上涨 9.98%，人气排名带动讨论热度升温。"
+        },
+        {
+          "rank": 5,
+          "symbol": "SZ000099",
+          "name": "中信海直",
+          "score": 99,
+          "metric": "人气榜第 5",
+          "change": "+9.99%",
+          "summary": "东方财富人气榜第 5，股价本周上涨 9.99%，人气排名带动讨论热度升温。"
+        },
+        {
+          "rank": 6,
+          "symbol": "SZ000530",
+          "name": "冰山冷热",
+          "score": 98,
+          "metric": "人气榜第 6",
+          "change": "+9.96%",
+          "summary": "东方财富人气榜第 6，股价本周上涨 9.96%，人气排名带动讨论热度升温。"
+        },
+        {
+          "rank": 7,
+          "symbol": "SH600825",
+          "name": "新华传媒",
+          "score": 94,
+          "metric": "人气榜第 7",
+          "change": "+10.01%",
+          "summary": "东方财富人气榜第 7，股价本周上涨 10.01%，人气排名带动讨论热度升温。"
+        },
+        {
+          "rank": 8,
+          "symbol": "SH603259",
+          "name": "药明康德",
+          "score": 86,
+          "metric": "人气榜第 8",
+          "change": "-6.60%",
+          "summary": "东方财富人气榜第 8，股价本周回落 6.60%，人气排名带动讨论热度升温。"
+        },
+        {
+          "rank": 9,
+          "symbol": "SH601606",
+          "name": "长城军工",
+          "score": 86,
+          "metric": "人气榜第 9",
+          "change": "+9.99%",
+          "summary": "东方财富人气榜第 9，股价本周上涨 9.99%，人气排名带动讨论热度升温。"
+        },
+        {
+          "rank": 10,
+          "symbol": "SH600519",
+          "name": "贵州茅台",
+          "score": 71,
+          "metric": "人气榜第 10",
+          "change": "+1.22%",
+          "summary": "东方财富人气榜第 10，股价本周上涨 1.22%，人气排名带动讨论热度升温。"
+        }
+      ]
+    },
+    "us": {
+      "label": "一周 美股热评",
+      "subtitle": "本周市场情绪 Top 10",
+      "source": "ApeWisdom / Reddit 股票社区热度",
+      "updatedLabel": "自动更新完成",
+      "aiStatus": "DeepSeek 评价失败",
+      "accent": "#8fb9ff",
+      "items": [
+        {
+          "rank": 1,
+          "symbol": "MU",
+          "name": "Micron Technology",
+          "score": 99,
+          "metric": "149 mentions",
+          "change": "排名持平",
+          "summary": "Reddit 股票社区热度第 2，本期提及 149 次、点赞 229 次，讨论排名较前期持平。"
+        },
+        {
+          "rank": 2,
+          "symbol": "BE",
+          "name": "Bloom Energy",
+          "score": 99,
+          "metric": "77 mentions",
+          "change": "排名上升",
+          "summary": "Reddit 股票社区热度第 4，本期提及 77 次、点赞 224 次，讨论排名较前期上升。"
+        },
+        {
+          "rank": 3,
+          "symbol": "NVDA",
+          "name": "NVIDIA",
+          "score": 99,
+          "metric": "69 mentions",
+          "change": "排名上升",
+          "summary": "Reddit 股票社区热度第 5，本期提及 69 次、点赞 131 次，讨论排名较前期上升。",
+          "logoDomain": "nvidia.com",
+          "logoUrl": "https://geticon.dev/?url=nvidia.com"
+        },
+        {
+          "rank": 4,
+          "symbol": "TSLA",
+          "name": "Tesla",
+          "score": 95,
+          "metric": "56 mentions",
+          "change": "排名上升",
+          "summary": "Reddit 股票社区热度第 6，本期提及 56 次、点赞 4,431 次，讨论排名较前期上升。",
+          "logoDomain": "tesla.com",
+          "logoUrl": "https://geticon.dev/?url=tesla.com"
+        },
+        {
+          "rank": 5,
+          "symbol": "ASTS",
+          "name": "AST SpaceMobile",
+          "score": 91,
+          "metric": "53 mentions",
+          "change": "排名上升",
+          "summary": "Reddit 股票社区热度第 7，本期提及 53 次、点赞 92 次，讨论排名较前期上升。"
+        },
+        {
+          "rank": 6,
+          "symbol": "GOOG",
+          "name": "Alphabet (Google)",
+          "score": 87,
+          "metric": "53 mentions",
+          "change": "排名上升",
+          "summary": "Reddit 股票社区热度第 8，本期提及 53 次、点赞 142 次，讨论排名较前期上升。",
+          "logoDomain": "abc.xyz",
+          "logoUrl": "https://geticon.dev/?url=abc.xyz"
+        },
+        {
+          "rank": 7,
+          "symbol": "SPCX",
+          "name": "SpaceX",
+          "score": 83,
+          "metric": "50 mentions",
+          "change": "排名上升",
+          "summary": "Reddit 股票社区热度第 9，本期提及 50 次、点赞 999 次，讨论排名较前期上升。"
+        },
+        {
+          "rank": 8,
+          "symbol": "DTE",
+          "name": "DTE Energy",
+          "score": 78,
+          "metric": "47 mentions",
+          "change": "排名上升",
+          "summary": "Reddit 股票社区热度第 10，本期提及 47 次、点赞 4,227 次，讨论排名较前期上升。"
+        },
+        {
+          "rank": 9,
+          "symbol": "NBIS",
+          "name": "Nebius Group",
+          "score": 74,
+          "metric": "44 mentions",
+          "change": "排名回落",
+          "summary": "Reddit 股票社区热度第 11，本期提及 44 次、点赞 183 次，讨论排名较前期回落。"
+        },
+        {
+          "rank": 10,
+          "symbol": "GOOGL",
+          "name": "Alphabet (Google)",
+          "score": 68,
+          "metric": "42 mentions",
+          "change": "排名上升",
+          "summary": "Reddit 股票社区热度第 13，本期提及 42 次、点赞 190 次，讨论排名较前期上升。",
+          "logoDomain": "abc.xyz",
+          "logoUrl": "https://geticon.dev/?url=abc.xyz"
+        }
+      ]
+    }
+  },
+  "disclaimer": "本报告仅反映公开数据中的市场讨论热度和情绪变化，不构成任何投资建议。"
+}

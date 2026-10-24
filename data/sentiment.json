@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-17T14:48:55.500857+08:00",
+  "generatedAt": "2026-10-24T15:06:56.464654+08:00",
   "period": {
-    "label": "2026/10/12 - 2026/10/18",
-    "start": "2026-10-12",
-    "end": "2026-10-18"
+    "label": "2026/10/19 - 2026/10/25",
+    "start": "2026-10-19",
+    "end": "2026-10-25"
   },
   "site": {
     "title": "一周市场周报",
@@ -14,7 +14,7 @@
       "label": "一周 A 股热评",
       "subtitle": "本周市场情绪 Top 10",
       "source": "东方财富人气榜 / 公开市场数据",
-      "updatedLabel": "自动更新完成",
+      "updatedLabel": "取数失败，保留上期",
       "aiStatus": "DeepSeek 评价失败",
       "accent": "#df7a63",
       "items": [
@@ -123,98 +123,98 @@
           "symbol": "MU",
           "name": "Micron Technology",
           "score": 99,
-          "metric": "227 mentions",
-          "change": "排名回落",
-          "summary": "Reddit 股票社区热度第 2，本期提及 227 次、点赞 826 次，讨论排名较前期回落。"
+          "metric": "149 mentions",
+          "change": "排名持平",
+          "summary": "Reddit 股票社区热度第 2，本期提及 149 次、点赞 229 次，讨论排名较前期持平。"
         },
         {
           "rank": 2,
-          "symbol": "TSLA",
-          "name": "Tesla",
+          "symbol": "BE",
+          "name": "Bloom Energy",
           "score": 99,
-          "metric": "225 mentions",
+          "metric": "77 mentions",
           "change": "排名上升",
-          "summary": "Reddit 股票社区热度第 3，本期提及 225 次、点赞 11,163 次，讨论排名较前期上升。",
-          "logoDomain": "tesla.com",
-          "logoUrl": "https://geticon.dev/?url=tesla.com"
+          "summary": "Reddit 股票社区热度第 4，本期提及 77 次、点赞 224 次，讨论排名较前期上升。"
         },
         {
           "rank": 3,
-          "symbol": "NBIS",
-          "name": "Nebius Group",
-          "score": 99,
-          "metric": "129 mentions",
-          "change": "排名回落",
-          "summary": "Reddit 股票社区热度第 5，本期提及 129 次、点赞 282 次，讨论排名较前期回落。"
-        },
-        {
-          "rank": 4,
-          "symbol": "CRWV",
-          "name": "CoreWeave",
-          "score": 98,
-          "metric": "127 mentions",
-          "change": "排名回落",
-          "summary": "Reddit 股票社区热度第 6，本期提及 127 次、点赞 599 次，讨论排名较前期回落。"
-        },
-        {
-          "rank": 5,
           "symbol": "NVDA",
           "name": "NVIDIA",
-          "score": 93,
-          "metric": "98 mentions",
-          "change": "排名回落",
-          "summary": "Reddit 股票社区热度第 7，本期提及 98 次、点赞 573 次，讨论排名较前期回落。",
+          "score": 99,
+          "metric": "69 mentions",
+          "change": "排名上升",
+          "summary": "Reddit 股票社区热度第 5，本期提及 69 次、点赞 131 次，讨论排名较前期上升。",
           "logoDomain": "nvidia.com",
           "logoUrl": "https://geticon.dev/?url=nvidia.com"
         },
         {
-          "rank": 6,
-          "symbol": "AMD",
-          "name": "AMD",
-          "score": 88,
-          "metric": "80 mentions",
+          "rank": 4,
+          "symbol": "TSLA",
+          "name": "Tesla",
+          "score": 95,
+          "metric": "56 mentions",
           "change": "排名上升",
-          "summary": "Reddit 股票社区热度第 8，本期提及 80 次、点赞 9,006 次，讨论排名较前期上升。",
-          "logoDomain": "amd.com",
-          "logoUrl": "https://geticon.dev/?url=amd.com"
+          "summary": "Reddit 股票社区热度第 6，本期提及 56 次、点赞 4,431 次，讨论排名较前期上升。",
+          "logoDomain": "tesla.com",
+          "logoUrl": "https://geticon.dev/?url=tesla.com"
+        },
+        {
+          "rank": 5,
+          "symbol": "ASTS",
+          "name": "AST SpaceMobile",
+          "score": 91,
+          "metric": "53 mentions",
+          "change": "排名上升",
+          "summary": "Reddit 股票社区热度第 7，本期提及 53 次、点赞 92 次，讨论排名较前期上升。"
+        },
+        {
+          "rank": 6,
+          "symbol": "GOOG",
+          "name": "Alphabet (Google)",
+          "score": 87,
+          "metric": "53 mentions",
+          "change": "排名上升",
+          "summary": "Reddit 股票社区热度第 8，本期提及 53 次、点赞 142 次，讨论排名较前期上升。",
+          "logoDomain": "abc.xyz",
+          "logoUrl": "https://geticon.dev/?url=abc.xyz"
         },
         {
           "rank": 7,
-          "symbol": "DTE",
-          "name": "DTE Energy",
-          "score": 84,
-          "metric": "72 mentions",
+          "symbol": "SPCX",
+          "name": "SpaceX",
+          "score": 83,
+          "metric": "50 mentions",
           "change": "排名上升",
-          "summary": "Reddit 股票社区热度第 9，本期提及 72 次、点赞 1,312 次，讨论排名较前期上升。"
+          "summary": "Reddit 股票社区热度第 9，本期提及 50 次、点赞 999 次，讨论排名较前期上升。"
         },
         {
           "rank": 8,
-          "symbol": "SNDK",
-          "name": "Sandisk",
-          "score": 80,
-          "metric": "70 mentions",
+          "symbol": "DTE",
+          "name": "DTE Energy",
+          "score": 78,
+          "metric": "47 mentions",
           "change": "排名上升",
-          "summary": "Reddit 股票社区热度第 10，本期提及 70 次、点赞 225 次，讨论排名较前期上升。"
+          "summary": "Reddit 股票社区热度第 10，本期提及 47 次、点赞 4,227 次，讨论排名较前期上升。"
         },
         {
           "rank": 9,
-          "symbol": "SOXL",
-          "name": "Direxion Shares ETF Trust - Direxion Daily Semiconductor Bull 3X Share",
-          "score": 71,
-          "metric": "62 mentions",
-          "change": "排名上升",
-          "summary": "Reddit 股票社区热度第 12，本期提及 62 次、点赞 8,543 次，讨论排名较前期上升。"
+          "symbol": "NBIS",
+          "name": "Nebius Group",
+          "score": 74,
+          "metric": "44 mentions",
+          "change": "排名回落",
+          "summary": "Reddit 股票社区热度第 11，本期提及 44 次、点赞 183 次，讨论排名较前期回落。"
         },
         {
           "rank": 10,
-          "symbol": "AAPL",
-          "name": "Apple",
-          "score": 69,
-          "metric": "54 mentions",
+          "symbol": "GOOGL",
+          "name": "Alphabet (Google)",
+          "score": 68,
+          "metric": "42 mentions",
           "change": "排名上升",
-          "summary": "Reddit 股票社区热度第 13，本期提及 54 次、点赞 134 次，讨论排名较前期上升。",
-          "logoDomain": "apple.com",
-          "logoUrl": "https://geticon.dev/?url=apple.com"
+          "summary": "Reddit 股票社区热度第 13，本期提及 42 次、点赞 190 次，讨论排名较前期上升。",
+          "logoDomain": "abc.xyz",
+          "logoUrl": "https://geticon.dev/?url=abc.xyz"
         }
       ]
     }
